@@ -1,0 +1,27 @@
+{
+    "name": "mybook.ai",
+    "main": "worker/index.js",
+    "version": "1.0.0",
+    "description": "A project that does awesome things",
+    "compatibility_date": "2024-01-01",
+    "site":{
+        "bucket": "./dist"
+    },
+    "vars": {
+        "ENVIRONMENT": "production"
+    },
+    "build": {
+        "command": "npm run build"
+    },
+    "dev": {
+        "port": 8787,
+        "local_protocol": "http"
+    },
+    "routes": [
+        {
+            "pattern": "mybook.ai/*",
+            "zone_id": "your_zone_id_here"
+        }
+    ],
+    "usage_model": "standard"
+}

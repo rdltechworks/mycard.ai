@@ -1,0 +1,21 @@
+{
+    "name": "mybook.ai",
+    "version": "1.0.0",
+    "description": "A project that does awesome things",
+    "scripts": {
+        "build": "node build.js",
+        "dev": "node build.js --watch",
+        "deploy": "npm run build && npx wrangler deploy"
+    },
+    "dependencies": {
+        "lucide-react": "^0.525.0",
+        "react": "19.1.0",
+        "react-dom": "19.1.0"
+    },
+    "devDependencies": {
+        "esbuild": "^0.19.0",
+        "wrangler": "^3.0.0"
+    },
+    "author": "Your Name <darleison.rodrigues@rdltechworks.com>",
+    "license": "MIT"
+}
