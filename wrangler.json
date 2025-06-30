@@ -1,8 +1,6 @@
 {
-    "name": "mybook.ai",
+    "name": "mybookai",
     "main": "worker/index.js",
-    "version": "1.0.0",
-    "description": "A project that does awesome things",
     "compatibility_date": "2024-01-01",
     "site":{
         "bucket": "./dist"
