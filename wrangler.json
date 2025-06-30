@@ -20,6 +20,5 @@
             "pattern": "mybook.ai/*",
             "zone_id": "your_zone_id_here"
         }
-    ],
-    "usage_model": "standard"
+    ]
 }
