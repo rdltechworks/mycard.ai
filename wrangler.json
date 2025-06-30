@@ -14,11 +14,5 @@
     "dev": {
         "port": 8787,
         "local_protocol": "http"
-    },
-    "routes": [
-        {
-            "pattern": "mybook.ai/*",
-            "zone_id": "your_zone_id_here"
-        }
-    ]
+    }
 }
