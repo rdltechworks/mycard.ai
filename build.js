@@ -3,31 +3,44 @@ const fs = require('fs');
 
 const isWatch = process.argv.includes('--watch');
 
+async function build() {
+  // Ensure dist directory exists
+  if (!fs.existsSync('dist')) {
+    fs.mkdirSync('dist');
+  }
 
-esbuild.build({
-  entryPoints: ['./src/index.js'],
-  bundle: true,
-  outfile: './dist/app.js',
-  format: 'iife',
-  target: 'es2020',
-  minify: !isWatch,
-  sourcemap: isWatch,
-  watch: isWatch && {
-    onRebuild(error) {
-      if (error) console.error('Rebuild failed:', error);
-      else console.log('Rebuild succeeded');
+  // Copy static files
+  fs.copyFileSync('public/index.html', 'dist/index.html');
+  fs.copyFileSync('src/styles.css', 'dist/styles.css');
+
+  const buildOptions = {
+    entryPoints: ['src/index.js'],
+    bundle: true,
+    outfile: 'dist/app.js',
+    format: 'iife',
+    target: 'es2020',
+    minify: !isWatch,
+    sourcemap: isWatch,
+    loader: { 
+      '.js': 'jsx',
+      '.jsx': 'jsx'
     },
-  },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(isWatch ? 'development' : 'production'),
-  },
-}).then(() => {
-    if (!fs.existsSync('./dist')) {
-      fs.mkdirSync('./dist', { recursive: true });
-    }
-    fs.copyFileSync('public/index.html', './dist/index.html');
-    fs.copyFileSync('src/styles.css', './dist/styles.css');
+    define: {
+      'process.env.NODE_ENV': isWatch ? '"development"' : '"production"'
+    },
+    external: [],
+  };
 
-    console.log('Build completed successfully');
+  if (isWatch) {
+    // Use context for watch mode
+    const ctx = await esbuild.context(buildOptions);
+    await ctx.watch();
+    console.log('👀 Watching for changes...');
+  } else {
+    // Single build
+    await esbuild.build(buildOptions);
+    console.log('✅ Build complete');
+  }
+}
 
-}).catch(() => process.exit(1));
+build().catch(() => process.exit(1));

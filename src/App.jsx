@@ -12,8 +12,8 @@ const PersonalBookGenerator = () => {
   const fileInputRef = useRef(null);
 
   const handleFileUpload = (event) => {
-    const uploadedFiles = Array.from(event.target.files) as File[];
-    const processedFiles = uploadedFiles.map((file: File) => ({
+    const uploadedFiles = Array.from(event.target.files);
+    const processedFiles = uploadedFiles.map((file) => ({
       id: Date.now() + Math.random(),
       name: file.name,
       size: file.size,
