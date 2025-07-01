@@ -1,18 +1,34 @@
 # wrangler.toml
 name = "mybookai"
 main = "worker/index.js"
-compatibility_date = "2024-01-01" # Keep your compatibility date
+compatibility_date = "2024-01-01" # Or a newer date
 
-# This is the correct way to serve static assets with env.ASSETS
-[assets]
-binding = "ASSETS"
-directory = "./dist" # This matches your "bucket" path
+# R2 Buckets
+[[r2_buckets]]
+binding = "MYBOOK_INPUT_BUCKET" # Name of the R2 bucket binding in your Worker
+bucket_name = "mybook-input-files" # Name of your R2 bucket
 
-[vars]
-ENVIRONMENT = "production"
+[[r2_buckets]]
+binding = "MYBOOK_OUTPUT_BUCKET" # Name of the R2 bucket binding in your Worker
+bucket_name = "mybook-output-books" # Name of your R2 bucket
+
+# Durable Objects
+[[durable_objects]]
+binding = "MYBOOK_JOB_MANAGER" # Name of the Durable Object binding in your Worker
+class_name = "BookJobManager" # The class name of your Durable Object
+script_name = "mybookai" # The Worker script that contains the Durable Object class
+
+# Queues
+[[queues.producers]]
+binding = "MYBOOK_JOB_QUEUE" # Name of the Queue binding in your Worker
+queue = "mybook-job-queue" # Name of your Cloudflare Queue
+
+# Workers AI
+[[ai]]
+binding = "AI" # Name of the AI binding in your Worker
 
 [build]
-command = "npm run build"
+command = "npm run build" # Command to build your frontend (e.g., React app)
 
 [dev]
 port = 8787
@@ -20,3 +36,23 @@ local_protocol = "http"
 
 [observability.logs]
 enabled = true
+
+# AI Processor Worker
+[[workers_for_platforms]]
+name = "mybookai-ai-processor"
+main = "ai-processor-worker/index.js"
+compatibility_date = "2024-01-01"
+
+# Bindings for AI Processor Worker
+[workers_for_platforms.r2_buckets]
+MYBOOK_INPUT_BUCKET = "mybook-input-files"
+MYBOOK_OUTPUT_BUCKET = "mybook-output-books"
+
+[workers_for_platforms.durable_objects]
+MYBOOK_JOB_MANAGER = {"script_name": "mybookai", "class_name": "BookJobManager"}
+
+[workers_for_platforms.queues.consumers]
+MYBOOK_JOB_QUEUE = {"queue": "mybook-job-queue", "max_batch_size": 1, "max_batch_timeout": 1, "max_retries": 3}
+
+[workers_for_platforms.ai]
+binding = "AI"
