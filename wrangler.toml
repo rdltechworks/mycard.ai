@@ -48,12 +48,12 @@ compatibility_date = "2024-01-01"
 MYBOOK_INPUT_BUCKET = "mybook-input-files"
 MYBOOK_OUTPUT_BUCKET = "mybook-output-books"
 
-[workers_for_platforms.durable_objects.MYBOOK_JOB_MANAGER] # Changed this line
+[workers_for_platforms.durable_objects.MYBOOK_JOB_MANAGER]
 script_name = "mybookai"
 class_name = "BookJobManager"
 
-[workers_for_platforms.queues.consumers]
-MYBOOK_JOB_QUEUE = {"queue": "mybook-job-queue", "max_batch_size": 1, "max_batch_timeout": 1, "max_retries": 3}
+[workers_for_platforms.queues.consumers.MYBOOK_JOB_QUEUE]
+queue = "mybook-job-queue"
 
 [workers_for_platforms.ai]
 binding = "AI"
