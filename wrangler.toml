@@ -13,10 +13,8 @@ binding = "MYBOOK_OUTPUT_BUCKET" # Name of the R2 bucket binding in your Worker
 bucket_name = "mybook-output-books" # Name of your R2 bucket
 
 # Durable Objects
-[[durable_objects]]
-binding = "MYBOOK_JOB_MANAGER" # Name of the Durable Object binding in your Worker
-class_name = "BookJobManager" # The class name of your Durable Object
-script_name = "mybookai" # The Worker script that contains the Durable Object class
+[durable_objects]
+MYBOOK_JOB_MANAGER = { class_name = "BookJobManager", script_name = "mybookai" }
 
 # Queues
 [[queues.producers]]
