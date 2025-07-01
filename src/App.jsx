@@ -6,6 +6,7 @@ import ConfigureStep from './components/ConfigureStep';
 import ProcessingStep from './components/ProcessingStep';
 import CompleteStep from './components/CompleteStep';
 import ErrorStep from './components/ErrorStep';
+import WelcomePage from './components/WelcomePage'; // Import the new WelcomePage
 
 const PersonalBookGenerator = () => {
   const [files, setFiles] = useState([]);
@@ -195,4 +196,15 @@ const PersonalBookGenerator = () => {
   );
 };
 
-export default PersonalBookGenerator;
+// New root component to conditionally render WelcomePage or PersonalBookGenerator
+const App = () => {
+  const [showWelcome, setShowWelcome] = useState(true); // Set to true to show welcome page initially
+
+  if (showWelcome) {
+    return <WelcomePage />;
+  } else {
+    return <PersonalBookGenerator />;
+  }
+};
+
+export default App;
