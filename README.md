@@ -1,10 +1,6 @@
-# Timeless Memory
-
-![Timeless Memory Logo](public/assets/timeless_memory_logo.png)
-
 ## Project Overview
 
-**Timeless Memory** is a cutting-edge application developed by RDL Techworks, designed to transform personal digital memories (files, photos, documents) into beautifully crafted, AI-generated digital books. Our core business model focuses on providing a unique service that allows users to immortalize their experiences in a narrative format, with an integrated option for high-quality physical printing.
+ designed to transform personal digital memories (files, photos, documents) into beautifully crafted, AI-generated digital cards. Our core business model focuses on providing a unique service that allows users to immortalize their experiences in a narrative format, with an integrated option for high-quality physical printing.
 
 This project represents a significant opportunity for RDL Techworks to enter the personalized content creation market, leveraging advanced AI and a robust, scalable cloud infrastructure.
 
@@ -46,7 +42,7 @@ Timeless Memory employs a fully serverless, cloud-native architecture, primarily
 
 *   **Cloudflare R2 (Object Storage):
     *   **`mybook-input-files`:** Temporary storage for user-uploaded raw files, with immediate deletion post-processing.
-    *   **`mybook-output-books`:** Storage for the final generated book content, subject to a time-limited retention policy to ensure user privacy and efficient storage management.
+    *   **`mybook-output-cards`:** Storage for the final generated book content, subject to a time-limited retention policy to ensure user privacy and efficient storage management.
     *   Offers highly scalable, durable, and cost-effective object storage.
 
 *   **Cloudflare Workers AI (LLM Inference):
@@ -94,7 +90,7 @@ The Timeless Memory logo and all associated branding elements located in `public
 
 3.  **Cloudflare Configuration (`wrangler.toml`):
     Ensure your `wrangler.toml` is correctly configured with the necessary bindings for R2 buckets, Durable Objects, and Queues. You will need to create these resources in your Cloudflare dashboard:
-    *   R2 Buckets: `mybook-input-files`, `mybook-output-books`
+    *   R2 Buckets: `mybook-input-files`, `mybook-output-cards`
     *   Durable Object Namespace: `MYBOOK_JOB_MANAGER` (will be created on first deploy if not exists)
     *   Queue: `mybook-job-queue`
 
@@ -114,10 +110,12 @@ The Timeless Memory logo and all associated branding elements located in `public
     npm run deploy
     ```
     This command uses `wrangler` to deploy your Cloudflare Workers and the static assets from `dist/` to Cloudflare Pages.
-
+   
+## Backlog
+*   Exploring more advanced AI models and techniques (e.g., RAG) for improved generation quality and nuanced "tone" integration.
+*   Developing a more sophisticated frontend for job tracking and user interaction.
+ 
 ## Future Enhancements
 
 *   Implementing a robust user authentication and payment system.
-*   Exploring more advanced AI models and techniques (e.g., RAG) for improved generation quality and nuanced "tone" integration.
-*   Developing a more sophisticated frontend for job tracking and user interaction.
 *   Integration with Cloudflare Images for advanced image processing and OCR capabilities.
